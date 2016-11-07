@@ -1,0 +1,55 @@
+body {
+	background-color: #FAFAFA;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.navbar {
+	margin-bottom: 0;
+}
+
+.navbar-inverse .navbar-text {
+	color: #f9f9f9;
+	font-weight: bold;
+}
+
+.header-top {
+	background-color: #dddddd;
+}
+
+.header-top .brand {
+	color: red;
+	font-size: 22px;
+	display: block;
+}
+
+.header-top .text {
+	font-size: 14px;
+	color: #a4a4a4;
+}
+
+.header-middle {
+	border-bottom: 1px solid #d4d4d4;
+	margin-bottom: 13px;
+}
+
+.col-center-block {
+    float: none;
+    display: block;
+    margin: 0 auto;
+    /* margin-left: auto; margin-right: auto; */
+}
+
+#log2, #loginError, #passwordError {
+	display: none;
+}
+
+.media .thumbnail {
+	margin-bottom: 0;
+}
+
+.has-error #inputEmail::-webkit-input-placeholder, .has-error #inputPassword::-webkit-input-placeholder { 
+	color: red; 
+}
