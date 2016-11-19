@@ -4,16 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -55,6 +46,10 @@ public class User implements Serializable{
 	@NotEmpty
 	@Column(name="phone", nullable=false)
 	private String phone;
+
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name="image_token_id", referencedColumnName="id")
+	private ImageToken image_token;
 
 	@NotEmpty
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -141,6 +136,14 @@ public class User implements Serializable{
 
 	public void setUserProfiles(Set<UserProfile> userProfiles) {
 		this.userProfiles = userProfiles;
+	}
+
+	public ImageToken getImage_token() {
+		return image_token;
+	}
+
+	public void setImage_token(ImageToken image_token) {
+		this.image_token = image_token;
 	}
 
 	@Override

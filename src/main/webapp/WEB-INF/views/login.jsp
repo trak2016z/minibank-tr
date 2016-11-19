@@ -39,7 +39,7 @@
 </header>
 
 <c:url var="loginUrl" value="/login" />
-<form action="${loginUrl}" method="post" class="form-horizontal">
+<form action="${loginUrl}" method="post" class="form-horizontal" id="login-form">
 	<div class="col-md-6 col-center-block">
 
 		<c:if test="${param.error != null}">
@@ -72,7 +72,6 @@
 						<button type="submit" class="btn btn-success pull-right" data-loading-text="Przetważanie...">Przejdź dalej</button>
 					</div>
 				</div>
-</form>
 </div>
 </div>
 <div class="panel panel-default" id="log2">
@@ -82,11 +81,8 @@
 			<div class="col-lg-12">
 				<div class="media">
 					<div class="media-left">
-						<img class="media-object thumbnail" src="<c:url value='/static/images/cat.jpg' />" alt="...">
-					</div>
-					<div class="media-body">
-						<h4 class="media-heading">19:57:15</h4>
-						sobota, 29 października 2016
+						<img class="media-object thumbnail img-responsive" id="image-token" src="" />
+						<!--<img class="media-object thumbnail" src="<c:url value='/static/images/cat.jpg' />" alt="...">-->
 					</div>
 				</div>
 			</div>

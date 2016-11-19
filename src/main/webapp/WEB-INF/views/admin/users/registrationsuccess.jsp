@@ -42,14 +42,14 @@
 </header>
 <div class="container-fluid">
 
-		<%@include file="authheader.jsp" %>
+		<%@include file="../../authheader.jsp" %>
 		
 		<div class="alert alert-success lead">
 	    	${success}
 		</div>
 		
 		<div class="well">
-			Wróć do <a href="<c:url value='/list' />">listy użytkowników</a>
+			Wróć do <a href="<c:url value='/admin/users/list' />">listy użytkowników</a>
 		</div>
 
 </div>

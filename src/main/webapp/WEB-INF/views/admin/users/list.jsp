@@ -42,7 +42,7 @@
 	</ol>
 </header>
 <div class="container-fluid">
-		<%@include file="authheader.jsp" %>	
+		<%@include file="../../authheader.jsp" %>
 		<div class="panel panel-default">
 			  <!-- Default panel contents -->
 		  	<div class="panel-heading"><span class="lead"><h4>Lista użytkowników</h4></span></div>
@@ -70,10 +70,10 @@
 						<td>${user.email}</td>
 						<td>${user.ssoId}</td>
 					    <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-							<td><a href="<c:url value='/edit-user-${user.ssoId}' />" class="btn btn-success custom-width">EDYTUJ</a></td>
+							<td><a href="<c:url value='/admin/users/edit-user-${user.ssoId}' />" class="btn btn-success custom-width">EDYTUJ</a></td>
 				        </sec:authorize>
 				        <sec:authorize access="hasRole('ADMIN')">
-							<td><a href="<c:url value='/delete-user-${user.ssoId}' />" class="btn btn-danger custom-width">USUŃ</a></td>
+							<td><a href="<c:url value='/admin/users/delete-user-${user.ssoId}' />" class="btn btn-danger custom-width">USUŃ</a></td>
         				</sec:authorize>
 					</tr>
 				</c:forEach>
@@ -82,7 +82,7 @@
 		</div>
 		<sec:authorize access="hasRole('ADMIN')">
 		 	<div class="well">
-		 		<a href="<c:url value='/newuser' />">Dodaj nowego użytkownika</a>
+		 		<a href="<c:url value='/admin/users/newuser' />">Dodaj nowego użytkownika</a>
 		 	</div>
 	 	</sec:authorize>
 </div>

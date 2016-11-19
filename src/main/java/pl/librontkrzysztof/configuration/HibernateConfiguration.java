@@ -15,6 +15,9 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import pl.librontkrzysztof.dao.ImageTokenDao;
+import pl.librontkrzysztof.dao.ImageTokenDaoImpl;
 
 @Configuration
 @EnableTransactionManagement
@@ -58,6 +61,20 @@ public class HibernateConfiguration {
        HibernateTransactionManager txManager = new HibernateTransactionManager();
        txManager.setSessionFactory(s);
        return txManager;
+    }
+
+    @Autowired
+    @Bean(name = "ImageTokenDao")
+    public ImageTokenDao getImageTokenDao(SessionFactory sessionFactory) {
+        return new ImageTokenDaoImpl(sessionFactory);
+    }
+
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver getCommonsMultipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(20971520); // 20MB
+        multipartResolver.setMaxInMemorySize(1048576);	// 1MB
+        return multipartResolver;
     }
 }
 

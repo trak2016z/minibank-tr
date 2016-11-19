@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import pl.librontkrzysztof.converter.RoleToUserProfileConverter;
+import pl.librontkrzysztof.converter.StringToImageTokenConverter;
 
 
 @Configuration
@@ -26,6 +27,9 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	
 	@Autowired
 	RoleToUserProfileConverter roleToUserProfileConverter;
+
+	@Autowired
+	StringToImageTokenConverter stringToImageTokenConverter;
 
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -45,6 +49,7 @@ public class AppConfig extends WebMvcConfigurerAdapter{
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(roleToUserProfileConverter);
+        registry.addConverter(stringToImageTokenConverter);
     }
 
     @Bean

@@ -49,7 +49,7 @@
 	</ol>
 </header>
 <div class="container-fluid">
-		<%@include file="authheader.jsp" %>
+		<%@include file="../../authheader.jsp" %>
 	<div class="panel panel-default">
 		<div class="panel-heading"><h4>Dodaj użytkownika</h4></div>
 		<tr class="panel-body">
@@ -160,6 +160,20 @@
 					</div>
 				</td></tr>
 
+				<tr><td>
+					<div class="form-group col-md-12">
+						<label class="col-md-3 control-lable" for="userProfiles">Typ konta</label>
+						<div class="col-md-7">
+							<form:select path="image_token">
+								<form:options items="${imagetokens}" itemValue="id" itemLabel="name" class="form-control" />
+							</form:select>
+							<div class="text-danger">
+								<form:errors path="image_token" class="help-inline"/>
+							</div>
+						</div>
+					</div>
+				</td></tr>
+
 			<tr><td>
 				<div class="form-group col-md-12">
 					<label class="col-md-3 control-lable" for="userProfiles">Typ konta</label>
@@ -176,10 +190,10 @@
 				<div class="form-actions pull-right">
 					<c:choose>
 						<c:when test="${edit}">
-							<input type="submit" value="Aktualizuj" class="btn btn-primary"/> albo <a href="<c:url value='/list' />">Anuluj</a>
+							<input type="submit" value="Aktualizuj" class="btn btn-primary"/> albo <a href="<c:url value='/admin/users/list' />">Anuluj</a>
 						</c:when>
 						<c:otherwise>
-							<input type="submit" value="Utwórz nowe konto" class="btn btn-primary"/> albo <a href="<c:url value='/list' />">Anuluj</a>
+							<input type="submit" value="Utwórz nowe konto" class="btn btn-primary"/> albo <a href="<c:url value='/admin/users/list' />">Anuluj</a>
 						</c:otherwise>
 					</c:choose>
 				</div>
