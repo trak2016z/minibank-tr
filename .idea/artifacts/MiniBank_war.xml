@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="MiniBank:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="MiniBank-1.0.0.war">
-      <element id="artifact" artifact-name="MiniBank:war exploded" />
-    </root>
-  </artifact>
-</component>
