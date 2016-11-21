@@ -44,7 +44,8 @@
     <div class="panel panel-default">
         <div class="panel-heading"><h4>Dodaj token obrazkowy</h4></div>
         <tr class="panel-body">
-            <form:form method="POST" class="form-horizontal" action="/MiniBank-1.0.0/admin/imageToken/add?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+            <c:url var="action_url" value='/admin/imageToken/add?${_csrf.parameterName}=${_csrf.token}' />
+            <form:form method="POST" class="form-horizontal" action="${action_url}" enctype="multipart/form-data">
     <table class="table">
         <tr><td>
             <div class="form-group col-md-12">
