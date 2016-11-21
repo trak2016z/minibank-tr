@@ -31,7 +31,7 @@ public class RESTController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getImageToken/{userId}")
+    @RequestMapping(method = RequestMethod.GET, value = {"/getImageToken/{userId}", "/MiniBank-1.0.0/getImageToken/{userId}"})
     String getImageToken(@PathVariable String userId) throws IOException {
         User user = userService.findBySSO(userId);
         ByteArrayInputStream bais = null;
