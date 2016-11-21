@@ -38,6 +38,7 @@
 	</nav>
 	<ol class="breadcrumb">
 		<li class="active bold">Bankowość internetowa</li>
+		<li class="active"><a href="<c:url value='/admin/dashboard/' />">Panel administratora</a></li>
 		<li class="active">Lista użytkowników</li>
 	</ol>
 </header>
@@ -73,7 +74,7 @@
 							<td><a href="<c:url value='/admin/users/edit-user-${user.ssoId}' />" class="btn btn-success custom-width">EDYTUJ</a></td>
 				        </sec:authorize>
 				        <sec:authorize access="hasRole('ADMIN')">
-							<td><a href="<c:url value='/admin/users/delete-user-${user.ssoId}' />" class="btn btn-danger custom-width">USUŃ</a></td>
+							<td><a href="#" data-href="<c:url value='/admin/users/delete-user-${user.ssoId}' />" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger custom-width">USUŃ</a></td>
         				</sec:authorize>
 					</tr>
 				</c:forEach>
@@ -87,6 +88,26 @@
 	 	</sec:authorize>
 </div>
 
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">UWAGA! Wymagane potwierdzenie</h4>
+			</div>
+
+			<div class="modal-body">
+				<p>Czy na pewno chcesz dokonać usunięcia tego użytkownika?</p>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+				<a class="btn btn-danger btn-ok">Usuń</a>
+			</div>
+		</div>
+	</div>
+</div>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="<c:url value='/static/js/jquery.min.js' />"></script>

@@ -37,7 +37,8 @@
 	</nav>
 	<ol class="breadcrumb">
 		<li class="active bold">Bankowość internetowa</li>
-		<li class="active">Panel logowania</li>
+		<li class="active"><a href="<c:url value='/admin/dashboard/' />">Panel administratora</a></li>
+		<li class="active">Rejestracja użytkownika</li>
 	</ol>
 </header>
 <div class="container-fluid">

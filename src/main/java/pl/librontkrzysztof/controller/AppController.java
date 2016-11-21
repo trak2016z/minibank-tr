@@ -84,7 +84,7 @@ public class AppController {
 			{
 				return "redirect:/admin/dashboard";
 			}else{
-				return "redirect:/user/dashboard";
+				return "redirect:/dashboard";
 			}
 
 	    }

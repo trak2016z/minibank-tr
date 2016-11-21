@@ -69,7 +69,6 @@ public class UserController {
     public String saveUser(@Valid User user, BindingResult result,
                            ModelMap model) {
 
-
         if (result.hasErrors()) {
             return "admin/users/registration";
         }

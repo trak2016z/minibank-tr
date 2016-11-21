@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/admin/**").access("hasRole('ADMIN')")
-				.antMatchers("/user/**").access("hasRole('USER')")
+				.antMatchers("/dashboard/**").access("hasRole('USER')")
 				.and().formLogin().loginPage("/login").loginPage("/")
 				.loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and()
 				.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)

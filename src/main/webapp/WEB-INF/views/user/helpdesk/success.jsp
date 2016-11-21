@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -37,23 +36,24 @@
         </div>
     </nav>
     <ol class="breadcrumb">
-        <li class="bold">Bankowość internetowa</li>
-        <li class="active">Panel administratora</li>
+        <li class="active bold">Bankowość internetowa</li>
+        <li class="active"><a href="<c:url value='/admin/dashboard/' />">Panel użytkownika</a></li>
+        <li class="active">Dodawanie nowego zgłoszenia</li>
     </ol>
 </header>
 <div class="container-fluid">
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead"><h4>Lista funkcji</h4></span></div>
-        <div class="list-group">
-            <a href="<c:url value="/admin/users/list" />" class="list-group-item">Zarządzanie użytkownikami</a>
-            <a href="<c:url value="/admin/imageToken/list" />" class="list-group-item">Zarządzanie tokenami obrazkowymi</a>
-            <a href="<c:url value="/admin/helpdesk/list" />" class="list-group-item">Zarządzanie zgłoszeniami użytkowników</a>
 
-        </div>
+    <%@include file="../../authheader.jsp" %>
+
+    <div class="alert alert-success lead">
+        ${success}
     </div>
-</div>
 
+    <div class="well">
+        Wróć do <a href="<c:url value='/dashboard/helpdesk/list' />">listy zgłoszeń</a>
+    </div>
+
+</div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="<c:url value='/static/js/jquery.min.js' />"></script>

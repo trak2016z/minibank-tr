@@ -53,3 +53,7 @@ body {
 .has-error #inputEmail::-webkit-input-placeholder, .has-error #inputPassword::-webkit-input-placeholder { 
 	color: red; 
 }
+
+.active a {
+	color: #bbbbbb;
+}

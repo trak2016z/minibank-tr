@@ -38,7 +38,7 @@
     </nav>
     <ol class="breadcrumb">
         <li class="bold">Bankowość internetowa</li>
-        <li class="active">Panel administratora</li>
+        <li class="active">Panel użytkownika</li>
     </ol>
 </header>
 <div class="container-fluid">
@@ -46,9 +46,7 @@
         <!-- Default panel contents -->
         <div class="panel-heading"><span class="lead"><h4>Lista funkcji</h4></span></div>
         <div class="list-group">
-            <a href="<c:url value="/admin/users/list" />" class="list-group-item">Zarządzanie użytkownikami</a>
-            <a href="<c:url value="/admin/imageToken/list" />" class="list-group-item">Zarządzanie tokenami obrazkowymi</a>
-            <a href="<c:url value="/admin/helpdesk/list" />" class="list-group-item">Zarządzanie zgłoszeniami użytkowników</a>
+            <a href="<c:url value="/dashboard/helpdesk/list" />" class="list-group-item">Moje zgłoszenia</a>
 
         </div>
     </div>
