@@ -47,7 +47,7 @@ public class User implements Serializable{
 	@Column(name="phone", nullable=false)
 	private String phone;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinColumn(name="image_token_id", referencedColumnName="id")
 	private ImageToken image_token;
 

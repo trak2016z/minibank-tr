@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="pl">
@@ -38,45 +39,53 @@
     </nav>
     <ol class="breadcrumb">
         <li class="active bold">Bankowość internetowa</li>
-        <li class="active">Lista użytkowników</li>
+        <li class="active"><a href="<c:url value='/admin/dashboard/' />">Panel administratora</a></li>
+        <li class="active">Odpowiedz na zgłoszenie</li>
     </ol>
 </header>
 <div class="container-fluid">
-    <%@include file="authheader.jsp" %>
+    <%@include file="../../authheader.jsp" %>
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead"><h4>Lista użytkowników</h4></span></div>
+        <div class="panel-heading"><span class="lead"><h4>Opis zgłoszenia</h4></span></div>
         <table class="table table-hover">
             <thead>
             <tr>
                 <th>Id</th>
-                <th>Nazwa</th>
-                <th>Obrazek</th>
-                <sec:authorize access="hasRole('ADMIN')">
-                    <th width="100"></th>
-                </sec:authorize>
-
+                <th>Tytuł</th>
+                <th>Pytanie</th>
+                <th>Użytkownik</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${imageTokens}" var="image">
                 <tr>
-                    <td>${image.id}</td>
-                    <td>${image.name}</td>
-                    <td>${user.data}</td>
-                    <sec:authorize access="hasRole('ADMIN')">
-                        <td><a href="<c:url value='/admin/imageToken/delete-${image.id}' />" class="btn btn-danger custom-width">USUŃ</a></td>
-                    </sec:authorize>
+                    <td>${helpdesks.id}</td>
+                    <td>${helpdesks.title}</td>
+                    <td>${helpdesks.question}</td>
+                    <td>${helpdesks.user.ssoId}</td>
                 </tr>
-            </c:forEach>
+            <tr>
+                <td colspan="4">
+                    <form:form method="POST" class="form-horizontal">
+
+                            <div class="form-group col-md-12">
+                                <label class="col-md-3 control-lable" for="answer">Odpowiedź</label>
+                                <div class="col-md-7">
+                                    <textarea class="form-control" rows="3" name="answer" id="answer"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-actions pull-right">
+                                <input type="submit" value="ODPOWIEDZ" class="btn btn-primary"/> albo <a href="<c:url value='/admin/helpdesk' />">Anuluj</a>
+                            </div>
+
+                        </form:form>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
-    <sec:authorize access="hasRole('ADMIN')">
-        <div class="well">
-            <a href="<c:url value='/admin/imageToken/add' />">Dodaj nowy obrazek</a>
-        </div>
-    </sec:authorize>
+
 </div>
 
 

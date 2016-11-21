@@ -38,6 +38,7 @@
 	</nav>
 	<ol class="breadcrumb">
 		<li class="active bold">Bankowość internetowa</li>
+		<li class="active"><a href="<c:url value='/admin/dashboard/' />">Panel administratora</a></li>
 		<li class="active"><c:choose>
 			<c:when test="${edit}">
 				Edycja użytkownika
@@ -57,8 +58,8 @@
 			<form:input type="hidden" path="id" id="id"/>
 			<table class="table">
 			<tr><td>
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="firstName">Imię</label>
+				<div class="form-group">
+					<label class="col-md-3 control-label" for="firstName">Imię</label>
 					<div class="col-md-7">
 						<form:input type="text" path="firstName" id="firstName" class="form-control"/>
 						<div class="text-danger">
@@ -70,7 +71,7 @@
 
 			<tr><td>
 				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="lastName">Nazwisko</label>
+					<label class="col-md-3 control-label" for="lastName">Nazwisko</label>
 					<div class="col-md-7">
 						<form:input type="text" path="lastName" id="lastName" class="form-control" />
 						<div class="text-danger">
@@ -82,7 +83,7 @@
 
 			<tr><td>
 				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="ssoId">Identyfikator</label>
+					<label class="col-md-3 control-label" for="ssoId">Identyfikator</label>
 					<div class="col-md-7">
 						<c:choose>
 							<c:when test="${edit}">
@@ -101,7 +102,7 @@
 
 			<tr><td>
 				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="password">Hasło</label>
+					<label class="col-md-3 control-label" for="password">Hasło</label>
 					<div class="col-md-7">
 						<form:input type="password" path="password" id="password" class="form-control" />
 						<div class="text-danger">
@@ -113,7 +114,7 @@
 
 			<tr><td>
 				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="email">Email</label>
+					<label class="col-md-3 control-label" for="email">Email</label>
 					<div class="col-md-7">
 						<form:input type="text" path="email" id="email" class="form-control" />
 						<div class="text-danger">
@@ -126,7 +127,7 @@
 
 				<tr><td>
 				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="city">Adres</label>
+					<label class="col-md-3 control-label" for="city">Adres</label>
 					<div class="col-md-7">
 						<form:input type="text" path="city" id="city" class="form-control" />
 						<div class="text-danger">
@@ -138,7 +139,7 @@
 
 				<tr><td>
 					<div class="form-group col-md-12">
-						<label class="col-md-3 control-lable" for="postalcode">Kod pocztowy</label>
+						<label class="col-md-3 control-label" for="postalcode">Kod pocztowy</label>
 						<div class="col-md-7">
 							<form:input type="text" path="postalcode" id="postalcode" class="form-control" />
 							<div class="text-danger">
@@ -150,7 +151,7 @@
 
 				<tr><td>
 					<div class="form-group col-md-12">
-						<label class="col-md-3 control-lable" for="phone">Telefon</label>
+						<label class="col-md-3 control-label" for="phone">Telefon</label>
 						<div class="col-md-7">
 							<form:input type="text" path="phone" id="phone" class="form-control" />
 							<div class="text-danger">
@@ -162,11 +163,22 @@
 
 				<tr><td>
 					<div class="form-group col-md-12">
-						<label class="col-md-3 control-lable" for="userProfiles">Typ konta</label>
+						<label class="col-md-3 control-label" for="image_token">Token obrazkowy</label>
 						<div class="col-md-7">
-							<form:select path="image_token">
-								<form:options items="${imagetokens}" itemValue="id" itemLabel="name" class="form-control" />
-							</form:select>
+								<form:select  path="image_token" class="form-control">
+									<c:forEach items="${imagetokens}" var="img">
+										<c:choose>
+											<c:when test="${user.image_token.id ==img.id}">
+												<option value="${img.id}" selected="selected">${img.name}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${img.id}">${img.name}</option>
+											</c:otherwise>
+										</c:choose>
+
+									</c:forEach>
+								</form:select>
+
 							<div class="text-danger">
 								<form:errors path="image_token" class="help-inline"/>
 							</div>
@@ -176,7 +188,7 @@
 
 			<tr><td>
 				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="userProfiles">Typ konta</label>
+					<label class="col-md-3 control-label" for="userProfiles">Typ konta</label>
 					<div class="col-md-7">
 						<form:select path="userProfiles" items="${roles}" multiple="true" itemValue="id" itemLabel="type" class="form-control" />
 						<div class="text-danger">

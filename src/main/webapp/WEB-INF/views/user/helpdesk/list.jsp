@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -30,40 +30,49 @@
             </div>
             <div id="navbar" class="navbar-collapse">
                 <p class="navbar-text">Witamy w systemie bankowości internetowej!</p>
+                <div class="navbar-form navbar-right">
+                    <a href="<c:url value="/logout" />" class="btn btn-warning">Wyloguj się</a>
+                </div>
             </div>
         </div>
     </nav>
     <ol class="breadcrumb">
         <li class="active bold">Bankowość internetowa</li>
-        <li class="active">Panel logowania</li>
+        <li class="active"><a href="<c:url value='/admin/dashboard/' />">Panel użytkownika</a></li>
+        <li class="active">Lista zgłoszeń</li>
     </ol>
 </header>
-
 <div class="container-fluid">
+    <%@include file="../../authheader.jsp" %>
     <div class="panel panel-default">
-        <div class="panel-heading"><h4>Dodaj token obrazkowy</h4></div>
-        <tr class="panel-body">
-            <form:form method="POST" class="form-horizontal" action="/MiniBank-1.0.0/admin/imageToken/add?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
-    <table class="table">
-        <tr><td>
-            <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="fileUpload">Wybierz plik:</label>
-                <div class="col-md-7">
-                    <input type="file" name="fileUpload" id="fileUpload" size="50" class="form-control" />
-                    <div class="text-danger">
-                        <form:errors path="firstName" class="help-inline"/>
-                    </div>
-                </div>
-            </div>
-        </td></tr>
+        <!-- Default panel contents -->
+        <div class="panel-heading"><span class="lead"><h4>Lista zgłoszeń</h4></span></div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tytuł</th>
+                <th>Pytanie</th>
+                <th>Odpowiedź</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${helpdesks}" var="help">
+                <tr>
+                    <td>${help.id}</td>
+                    <td>${help.title}</td>
+                    <td>${help.question}</td>
+                    <td>${help.answer}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+        <div class="well">
+            <a href="<c:url value='/dashboard/helpdesk/add' />">Dodaj nowe zgłoszenie</a>
+        </div>
+</div>
 
-        <tr><td>
-            <div class="form-actions pull-right">
-                        <input type="submit" value="Dodaj obrazek" class="btn btn-primary"/> albo <a href="<c:url value='/admin/imageToken' />">Anuluj</a>
-            </div>
-        </td></tr>
-
-</form:form>
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -71,5 +80,6 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
 <script src="<c:url value='/static/js/skrypty.js' />"></script>
+
 </body>
 </html>

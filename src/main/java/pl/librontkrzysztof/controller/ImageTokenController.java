@@ -1,5 +1,6 @@
 package pl.librontkrzysztof.controller;
 
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,12 +24,12 @@ public class ImageTokenController {
     @RequestMapping(value = {"", "/list"} , method = RequestMethod.GET)
     public String list(ModelMap model) {
         model.addAttribute("imageTokens", fileUploadDao.findAll());
-        return "imageTokenList";
+        return "admin/imageToken/list";
     }
 
     @RequestMapping(value = "/add" , method = RequestMethod.GET)
     public String showUploadForm(ModelMap model) {
-        return "addImageToken";
+        return "admin/imageToken/add";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -52,14 +53,23 @@ public class ImageTokenController {
 
 
 
-        return "success";
+        return "admin/imageToken/success";
     }
 
 
     @RequestMapping(value = { "/delete-{id}" }, method = RequestMethod.GET)
-    public String deleteUser(@PathVariable String id) {
-        fileUploadDao.deleteById(Integer.parseInt(id));
-        return "redirect:/admin/imageToken/list";
+    public String deleteUser(@PathVariable String id, ModelMap model) {
+        try {
+            fileUploadDao.deleteById(Integer.parseInt(id));
+            return "redirect:/admin/imageToken/list";
+        }catch(Exception e){
+
+            model.addAttribute("color", "danger");
+            model.addAttribute("success", "Token obrazkowy NIE został usunięty poprawnie, ponieważ jest przypisany do użytkownika.");
+            return "admin/imageToken/success";
+        }
+
+
     }
 
 }
