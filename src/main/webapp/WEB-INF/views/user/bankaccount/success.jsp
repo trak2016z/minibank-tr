@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -39,47 +38,27 @@
     <ol class="breadcrumb">
         <li class="active bold">Bankowość internetowa</li>
         <li class="active"><a href="<c:url value='/dashboard/' />">Panel użytkownika</a></li>
-        <li class="active">Lista zgłoszeń</li>
+        <li class="active">Dodawanie nowego konta</li>
     </ol>
 </header>
 <div class="container-fluid">
+
     <%@include file="../../authheader.jsp" %>
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead"><h4>Lista zgłoszeń</h4></span></div>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Tytuł</th>
-                <th>Pytanie</th>
-                <th>Odpowiedź</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${helpdesks}" var="help">
-                <tr>
-                    <td>${help.id}</td>
-                    <td>${help.title}</td>
-                    <td>${help.question}</td>
-                    <td>${help.answer}</td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+
+    <div class="alert alert-success lead">
+        ${success}
     </div>
-        <div class="well">
-            <a href="<c:url value='/dashboard/helpdesk/add' />">Dodaj nowe zgłoszenie</a>
-        </div>
+
+    <div class="well">
+        Wróć do <a href="<c:url value='/dashboard/bankaccount/list' />">listy kont</a>
+    </div>
+
 </div>
-
-
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="<c:url value='/static/js/jquery.min.js' />"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
 <script src="<c:url value='/static/js/skrypty.js' />"></script>
-
 </body>
 </html>

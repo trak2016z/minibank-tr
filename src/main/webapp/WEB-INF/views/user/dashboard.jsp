@@ -46,12 +46,12 @@
         <!-- Default panel contents -->
         <div class="panel-heading"><span class="lead"><h4>Lista funkcji</h4></span></div>
         <div class="list-group">
+            <a href="<c:url value="/dashboard/bankaccount/list" />" class="list-group-item">Moje rachunki bankowe</a>
             <a href="<c:url value="/dashboard/helpdesk/list" />" class="list-group-item">Moje zgłoszenia</a>
 
         </div>
     </div>
 </div>
-
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="<c:url value='/static/js/jquery.min.js' />"></script>

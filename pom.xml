@@ -158,7 +158,15 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
 		</dependency>
-		
+
+
+		<!-- https://github.com/arturmkrtchyan/iban4j -->
+		<dependency>
+			<groupId>org.iban4j</groupId>
+			<artifactId>iban4j</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 

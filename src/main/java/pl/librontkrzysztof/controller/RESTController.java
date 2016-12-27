@@ -21,6 +21,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 @RestController
 public class RESTController {
@@ -44,7 +45,7 @@ public class RESTController {
         BufferedImage sourceImage = ImageIO.read(bais);
 
         DateFormat df = new SimpleDateFormat("HH:mm:ss");
-        DateFormat df2 = new SimpleDateFormat("EEEE, d MMMM yyyy");
+        DateFormat df2 = new SimpleDateFormat("EEEE, d MMMM yyyy", new Locale("pl", "PL"));
 
 
         Date today = Calendar.getInstance().getTime();

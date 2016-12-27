@@ -39,41 +39,75 @@
     <ol class="breadcrumb">
         <li class="active bold">Bankowość internetowa</li>
         <li class="active"><a href="<c:url value='/dashboard/' />">Panel użytkownika</a></li>
-        <li class="active">Lista zgłoszeń</li>
+        <li class="active">Lista rachunków bankowych</li>
     </ol>
 </header>
 <div class="container-fluid">
     <%@include file="../../authheader.jsp" %>
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead"><h4>Lista zgłoszeń</h4></span></div>
+        <div class="panel-heading"><span class="lead"><h4>Lista rachunków bankowych</h4></span></div>
         <table class="table table-hover">
             <thead>
             <tr>
                 <th>Id</th>
-                <th>Tytuł</th>
-                <th>Pytanie</th>
-                <th>Odpowiedź</th>
+                <th>Nazwa</th>
+                <th>Numer</th>
+                <th>Zawartość</th>
+                <th>Akcje</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${helpdesks}" var="help">
-                <tr>
-                    <td>${help.id}</td>
-                    <td>${help.title}</td>
-                    <td>${help.question}</td>
-                    <td>${help.answer}</td>
-                </tr>
+            <c:forEach items="${wallets}" var="acc">
+                <c:choose>
+                    <c:when test="${acc.active==true}">
+                        <tr>
+                            <td>${acc.id}</td>
+                            <td>${acc.name}</td>
+                            <td>${acc.number}</td>
+                            <td>${acc.content}</td>
+                            <td><a href="#" data-href="<c:url value='/dashboard/bankaccount/delete-${acc.id}' />" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger custom-width">ZAWIEŚ</a></td>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>
+                        <tr class="warning">
+                            <td>${acc.id}</td>
+                            <td>${acc.name}</td>
+                            <td>${acc.number}</td>
+                            <td>${acc.content}</td>
+                            <td>ZAWIESZONE</td>
+                        </tr>
+                    </c:otherwise>
+                </c:choose>
             </c:forEach>
             </tbody>
         </table>
     </div>
         <div class="well">
-            <a href="<c:url value='/dashboard/helpdesk/add' />">Dodaj nowe zgłoszenie</a>
+            <a href="<c:url value='/dashboard/bankaccount/add' />">Dodaj nowy rachunek bankowy</a>
         </div>
 </div>
 
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">UWAGA! Wymagane potwierdzenie</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Czy na pewno chcesz dokonać zawieszenia tego konta?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                <a class="btn btn-danger btn-ok">ZAWIEŚ</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="<c:url value='/static/js/jquery.min.js' />"></script>
