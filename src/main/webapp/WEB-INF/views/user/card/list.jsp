@@ -2,6 +2,7 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -39,54 +40,45 @@
     <ol class="breadcrumb">
         <li class="active bold">Bankowość internetowa</li>
         <li class="active"><a href="<c:url value='/dashboard/' />">Panel użytkownika</a></li>
-        <li class="active">Lista rachunków bankowych</li>
+        <li class="active">Lista kart kodów jednorazowych</li>
     </ol>
 </header>
 <div class="container-fluid">
     <%@include file="../../authheader.jsp" %>
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead"><h4>Lista rachunków bankowych</h4></span></div>
+        <div class="panel-heading"><span class="lead"><h4>Lista kart kodów jednorazowych</h4></span></div>
         <table class="table table-hover">
             <thead>
             <tr>
                 <th>Id</th>
-                <th>Nazwa</th>
-                <th>Numer</th>
-                <th>Zawartość</th>
+                <th>Pozostało kodów</th>
+                <th>Aktywna</th>
                 <th>Akcje</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${wallets}" var="acc">
-                <c:choose>
-                    <c:when test="${acc.active==true}">
+            <c:forEach items="${cards}" var="card">
                         <tr>
-                            <td>${acc.id}</td>
-                            <td>${acc.name}</td>
-                            <td>${acc.number}</td>
-                            <td>${acc.content}</td>
-                            <td><a href="<c:url value='/dashboard/transaction/new/${acc.id}' />" class="btn btn-success">PRZELEW</a>
-                                <a href="#" data-href="<c:url value='/dashboard/bankaccount/delete-${acc.id}' />" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger custom-width">ZAWIEŚ</a></td>
+                            <td>${card.id}</td>
+                            <td>${card.getActive()}</td>
+                            <td>${card.active}</td>
+                            <c:choose>
+                                <c:when test="${card.active==true}">
+                                    <td><a href="#" data-href="<c:url value='/dashboard/card/delete-${card.id}' />" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger custom-width">ZAWIEŚ</a></td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td><a href="#" data-href="<c:url value='/dashboard/card/activate-${card.id}' />" data-toggle="modal" data-target="#deleteModal" class="btn btn-success custom-width">AKTYWUJ</a></td>
+                                </c:otherwise>
+                            </c:choose>
                         </tr>
-                    </c:when>
-                    <c:otherwise>
-                        <tr class="warning">
-                            <td>${acc.id}</td>
-                            <td>${acc.name}</td>
-                            <td>${acc.number}</td>
-                            <td>${acc.content}</td>
-                            <td>ZAWIESZONE</td>
-                        </tr>
-                    </c:otherwise>
-                </c:choose>
             </c:forEach>
             </tbody>
         </table>
     </div>
-        <div class="well">
-            <a href="<c:url value='/dashboard/bankaccount/add' />">Dodaj nowy rachunek bankowy</a>
-        </div>
+    <div class="well">
+        <a href="<c:url value='/dashboard/card/add' />">Dodaj nową kartę kodów jednorazowych</a>
+    </div>
 </div>
 
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -99,12 +91,12 @@
             </div>
 
             <div class="modal-body">
-                <p>Czy na pewno chcesz dokonać zawieszenia tego konta?</p>
+                <p>Czy na pewno chcesz dokonać zawieszenia/aktywacji tej karty kodów jednorazowych?</p>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-                <a class="btn btn-danger btn-ok">ZAWIEŚ</a>
+                <a class="btn btn-danger btn-ok">ZAWIEŚ/AKTYWUJ</a>
             </div>
         </div>
     </div>

@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="utf-8">
@@ -32,28 +31,28 @@
                 <p class="navbar-text">Witamy w systemie bankowości internetowej!</p>
                 <div class="navbar-form navbar-right">
                     <a href="<c:url value="/logout" />" class="btn btn-warning">Wyloguj się</a>
-                </div>
             </div>
         </div>
-    </nav>
-    <ol class="breadcrumb">
-        <li class="bold">Bankowość internetowa</li>
-        <li class="active">Panel użytkownika</li>
-    </ol>
+    </div>
+</nav>
+<ol class="breadcrumb">
+    <li class="active bold">Bankowość internetowa</li>
+    <li class="active"><a href="<c:url value='/dashboard/' />">Panel użytkownika</a></li>
+    <li class="active">Wykonywanie przelewu</li>
+</ol>
 </header>
 <div class="container-fluid">
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead"><h4>Lista funkcji</h4></span></div>
-        <div class="list-group">
-            <a href="<c:url value="/dashboard/card/list" />" class="list-group-item">Karty kodów jednorazowych</a>
-            <a href="<c:url value="/dashboard/transaction/new/0" />" class="list-group-item">Wykonaj przelew</a>
-            <a href="<c:url value="/dashboard/transaction/history" />" class="list-group-item">Historia przelewów</a>
-            <a href="<c:url value="/dashboard/bankaccount/list" />" class="list-group-item">Moje rachunki bankowe</a>
-            <a href="<c:url value="/dashboard/helpdesk/list" />" class="list-group-item">Moje zgłoszenia</a>
 
-        </div>
+    <%@include file="../../authheader.jsp" %>
+
+    <div class="alert alert-danger lead">
+        Nie posiadasz aktywnej karty kodów jednorazowych.
     </div>
+
+    <div class="well">
+        Przejdź do <a href="<c:url value='/dashboard/card/list' />">listy kart kodów jednorazowych</a>
+    </div>
+
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -62,4 +61,4 @@
 <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
 <script src="<c:url value='/static/js/skrypty.js' />"></script>
 </body>
-</html>
+        </html>

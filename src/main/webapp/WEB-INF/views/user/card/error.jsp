@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -37,23 +36,23 @@
         </div>
     </nav>
     <ol class="breadcrumb">
-        <li class="bold">Bankowość internetowa</li>
-        <li class="active">Panel użytkownika</li>
+        <li class="active bold">Bankowość internetowa</li>
+        <li class="active"><a href="<c:url value='/dashboard/' />">Panel użytkownika</a></li>
+        <li class="active">Aktywacja/dezaktywacja karty kodów jednorazowych</li>
     </ol>
 </header>
 <div class="container-fluid">
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead"><h4>Lista funkcji</h4></span></div>
-        <div class="list-group">
-            <a href="<c:url value="/dashboard/card/list" />" class="list-group-item">Karty kodów jednorazowych</a>
-            <a href="<c:url value="/dashboard/transaction/new/0" />" class="list-group-item">Wykonaj przelew</a>
-            <a href="<c:url value="/dashboard/transaction/history" />" class="list-group-item">Historia przelewów</a>
-            <a href="<c:url value="/dashboard/bankaccount/list" />" class="list-group-item">Moje rachunki bankowe</a>
-            <a href="<c:url value="/dashboard/helpdesk/list" />" class="list-group-item">Moje zgłoszenia</a>
 
-        </div>
+    <%@include file="../../authheader.jsp" %>
+
+    <div class="alert alert-danger lead">
+        ${error}
     </div>
+
+    <div class="well">
+        Wróć do <a href="<c:url value='/dashboard/card/list' />">listy kart kodów jednorazowych</a>
+    </div>
+
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

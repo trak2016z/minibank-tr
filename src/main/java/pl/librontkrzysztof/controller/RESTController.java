@@ -1,12 +1,15 @@
 package pl.librontkrzysztof.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.codec.Base64;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.librontkrzysztof.dao.CardDao;
 import pl.librontkrzysztof.dao.ImageTokenDao;
+import pl.librontkrzysztof.model.Card;
+import pl.librontkrzysztof.model.Token;
 import pl.librontkrzysztof.model.User;
 import pl.librontkrzysztof.service.UserService;
 
@@ -17,11 +20,13 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
 
 @RestController
 public class RESTController {
@@ -32,8 +37,11 @@ public class RESTController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CardDao cardDao;
+
     @RequestMapping(method = RequestMethod.GET, value = {"/getImageToken/{userId}", "/MiniBank-1.0.0/getImageToken/{userId}"})
-    String getImageToken(@PathVariable String userId) throws IOException {
+    public String getImageToken(@PathVariable String userId) throws IOException {
         User user = userService.findBySSO(userId);
         ByteArrayInputStream bais = null;
         if(user != null) {
@@ -94,5 +102,62 @@ public class RESTController {
         //model.addAttribute("userImage", base64Encoded );
 
         return base64Encoded;
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, value = {"/getCard/{cardId}", "/MiniBank-1.0.0/getCard/{cardId}"}, produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] getCard(@PathVariable String cardId) throws IOException {
+        Card card = cardDao.findById(Integer.parseInt(cardId));
+        ByteArrayInputStream bais = null;
+        if(card != null) {
+            final DefaultResourceLoader loader = new DefaultResourceLoader();
+            Resource resource = loader.getResource("classpath:karta_kodow.png");
+            BufferedImage cardImage = ImageIO.read(resource.getFile());
+
+
+
+
+            String text = "$MiniBank CARD ID: "+card.getId().toString();
+
+            Graphics2D g2d = (Graphics2D) cardImage.getGraphics();
+
+            // initializes necessary graphic properties
+            AlphaComposite alphaChannel = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
+            g2d.setComposite(alphaChannel);
+            g2d.setColor(Color.WHITE);
+            g2d.setFont(new Font("Tahoma", Font.BOLD, 14));
+            FontMetrics fontMetrics = g2d.getFontMetrics();
+
+            Set<Token> tokens = card.getTokens();
+
+            g2d.drawString(text, 5, 18);
+            g2d.setColor(Color.BLACK);
+            int centerX = 20;
+            int centerY = 55;
+            g2d.setFont(new Font("Tahoma", 0, 10));
+
+            int i = 0;
+            int j = 0;
+            for(Token tok : tokens){
+                    g2d.drawString(tok.getContent(), centerX+(j*59), centerY+(i*18));
+
+                i++;
+                if(i==8){
+                    j++;
+                    i=0;
+                }
+            }
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            ImageIO.write(cardImage, "png", baos);
+
+            byte[] imageBytes = baos.toByteArray();
+            baos.close();
+
+            return imageBytes;
+        }
+        else
+            return null;
     }
 }

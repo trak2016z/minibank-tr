@@ -4,7 +4,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -32,7 +34,7 @@ public class Transaction {
     private Date confirm_date;
 
     @NotNull
-    @Column(name = "value")
+    @Column(name = "value", precision = 8, scale = 2)
     private Double value;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
@@ -52,6 +54,7 @@ public class Transaction {
 
     @NotEmpty
     @Column(name = "name")
+    @Size(min = 3, max = 61, message = "Imię i nazwisko nie może być krótsze niż 2 znaki i dłuższe niż 61.")
     private String name;
 
     @Column(name = "address1", nullable = true)
@@ -182,5 +185,3 @@ public class Transaction {
         this.address2 = address2;
     }
 }
-
-
