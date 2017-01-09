@@ -18,7 +18,6 @@ public class TransactionDaoImpl extends AbstractDao<Integer, Transaction> implem
 
     @Override
     public void save(Transaction data) {
-        logger.info("Transaction : {}", data);
         persist(data);
     }
 

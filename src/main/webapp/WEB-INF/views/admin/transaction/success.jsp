@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="pl">
@@ -30,44 +29,31 @@
             </div>
             <div id="navbar" class="navbar-collapse">
                 <p class="navbar-text">Witamy w systemie bankowości internetowej!</p>
+                <div class="navbar-form navbar-right">
+                    <a href="<c:url value="/logout" />" class="btn btn-warning">Wyloguj się</a>
+                </div>
             </div>
         </div>
     </nav>
     <ol class="breadcrumb">
         <li class="active bold">Bankowość internetowa</li>
         <li class="active"><a href="<c:url value='/admin/dashboard/' />">Panel administratora</a></li>
-        <li class="active">Dodawanie tokenu obrazkowego</li>
+        <li class="active">Zmiana statusu</li>
     </ol>
 </header>
-
 <div class="container-fluid">
-    <div class="panel panel-default">
-        <div class="panel-heading"><h4>Dodaj token obrazkowy</h4></div>
 
-            <c:url var="action_url" value='/admin/imageToken/add?${_csrf.parameterName}=${_csrf.token}' />
-            <form:form method="POST" class="form-horizontal" action="${action_url}" enctype="multipart/form-data">
-    <table class="table">
-        <tr><td>
-            <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="fileUpload">Wybierz plik:</label>
-                <div class="col-md-7">
-                    <input type="file" name="fileUpload" id="fileUpload" size="50" class="form-control" />
-                    <div class="text-danger">
-                        <form:errors path="firstName" class="help-inline"/>
-                    </div>
-                </div>
-            </div>
-        </td></tr>
+    <%@include file="../../authheader.jsp" %>
 
-        <tr><td>
-            <div class="form-actions pull-right">
-                        <input type="submit" value="Dodaj obrazek" class="btn btn-primary"/> albo <a href="<c:url value='/admin/imageToken' />">Anuluj</a>
-            </div>
-        </td></tr>
+    <div class="alert alert-${color} lead">
+        ${success}
+    </div>
 
-</form:form>
-</table>
+    <div class="well">
+        Wróć do <a href="<c:url value='/admin/transaction/list' />">listy transakcji</a>
+    </div>
 
+</div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="<c:url value='/static/js/jquery.min.js' />"></script>

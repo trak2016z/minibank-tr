@@ -149,7 +149,15 @@
                                 <div class="form-group col-md-12">
                                     <label class="col-md-3 control-lable" for="template">Zapisz jako szablon:</label>
                                     <div class="col-md-7 checkbox">
-                                        <form:checkbox path="template" id="template" readonly="readonly" />
+                                        <form:checkbox path="template" id="template" />
+                                    </div>
+                                </div>
+                            </td></tr>
+                            <tr style="display: none;" id="transactionName"><td>
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-3 control-lable" for="savedTransactionName">Nazwa szablon:</label>
+                                    <div class="col-md-7 checkbox">
+                                        <form:input path="savedTransactionName" id="savedTransactionName" cssClass="form-control" readonly="readonly" />
                                     </div>
                                 </div>
                             </td></tr>

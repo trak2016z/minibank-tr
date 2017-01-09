@@ -1,9 +1,11 @@
 package pl.librontkrzysztof.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.librontkrzysztof.validator.TransactionValidator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "saved_transactions")
@@ -19,7 +21,7 @@ public class SavedTransaction {
 
     @NotNull
     @Column(name = "value")
-    private Double value;
+    private BigDecimal value;
 
     @Column(name = "confidential", nullable = false, columnDefinition = "confidential default true")
     private boolean confidential;
@@ -38,6 +40,9 @@ public class SavedTransaction {
     @Column(name = "address2", nullable = true)
     private String address2;
 
+    @Column(name = "transactionname", nullable = false)
+    private String transactionname;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -45,7 +50,7 @@ public class SavedTransaction {
     public SavedTransaction() {
     }
 
-    public SavedTransaction(String wallet_number, Double value, boolean confidential, String title, String name, String address1, String address2, User user) {
+    public SavedTransaction(String wallet_number, BigDecimal value, boolean confidential, String title, String name, String address1, String address2, String transactionname, User user) {
         this.wallet_number = wallet_number;
         this.value = value;
         this.confidential = confidential;
@@ -53,7 +58,21 @@ public class SavedTransaction {
         this.name = name;
         this.address1 = address1;
         this.address2 = address2;
+        this.transactionname = transactionname;
         this.user = user;
+    }
+
+    public SavedTransaction(TransactionValidator transaction, User user){
+        this.wallet_number = transaction.getWallet_number();
+        this.value = transaction.getValue();
+        this.confidential = true;
+        this.title = transaction.getTitle();
+        this.name = transaction.getName();
+        this.address1 = transaction.getAddress1();
+        this.address2 = transaction.getAddress2();
+        this.user = user;
+        this.transactionname = transaction.getSavedTransactionName();
+
     }
 
     public Integer getId() {
@@ -72,11 +91,11 @@ public class SavedTransaction {
         this.wallet_number = wallet_number;
     }
 
-    public Double getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public void setValue(BigDecimal value) {
         this.value = value;
     }
 
@@ -126,5 +145,13 @@ public class SavedTransaction {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getTransactionname() {
+        return transactionname;
+    }
+
+    public void setTransactionname(String transactionname) {
+        this.transactionname = transactionname;
     }
 }

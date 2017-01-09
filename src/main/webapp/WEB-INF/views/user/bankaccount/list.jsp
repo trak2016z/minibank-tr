@@ -2,6 +2,7 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -65,7 +66,8 @@
                             <td>${acc.id}</td>
                             <td>${acc.name}</td>
                             <td>${acc.number}</td>
-                            <td>${acc.content}</td>
+                            <td><fmt:formatNumber type="number"
+                                                  minFractionDigits="2" value="${acc.content}" /></td>
                             <td><a href="<c:url value='/dashboard/transaction/new/${acc.id}' />" class="btn btn-success">PRZELEW</a>
                                 <a href="#" data-href="<c:url value='/dashboard/bankaccount/delete-${acc.id}' />" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger custom-width">ZAWIEŚ</a></td>
                         </tr>
@@ -75,7 +77,8 @@
                             <td>${acc.id}</td>
                             <td>${acc.name}</td>
                             <td>${acc.number}</td>
-                            <td>${acc.content}</td>
+                            <td><fmt:formatNumber type="number"
+                                                  minFractionDigits="2" value="${acc.content}" /></td>
                             <td>ZAWIESZONE</td>
                         </tr>
                     </c:otherwise>

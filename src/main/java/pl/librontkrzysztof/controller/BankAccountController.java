@@ -20,6 +20,7 @@ import pl.librontkrzysztof.model.Wallet;
 import pl.librontkrzysztof.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
@@ -78,7 +79,7 @@ public class BankAccountController {
 
         wallet.setName(request.getParameter("name"));
         wallet.setNumber(iban.toString());
-        wallet.setContent(0.0);
+        wallet.setContent(new BigDecimal(0.0));
         wallet.setActive(true);
         walletDao.save(wallet);
 
@@ -96,7 +97,7 @@ public class BankAccountController {
         }
         else {
             if (wallet.getUser().getSsoId().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
-                if (wallet.getContent() != 0.0) {
+                if (wallet.getContent().compareTo(new BigDecimal(0.0)) == -1) {
                     model.addAttribute("error", "Nie można zawiesić konta z zawartością!");
                     return "user/bankaccount/error";
                 } else {

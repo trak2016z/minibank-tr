@@ -13,4 +13,5 @@ public interface WalletDao {
     List<Wallet> findByUserId(int id);
     List<Wallet> findAll();
     void deleteById(int id);
+    List<Wallet> findActiveByUserId(int id);
 }

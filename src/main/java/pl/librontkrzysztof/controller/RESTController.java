@@ -8,13 +8,17 @@ import org.springframework.security.crypto.codec.Base64;
 import org.springframework.web.bind.annotation.*;
 import pl.librontkrzysztof.dao.CardDao;
 import pl.librontkrzysztof.dao.ImageTokenDao;
+import pl.librontkrzysztof.dao.SavedTransactionDao;
 import pl.librontkrzysztof.model.Card;
+import pl.librontkrzysztof.model.SavedTransaction;
 import pl.librontkrzysztof.model.Token;
 import pl.librontkrzysztof.model.User;
 import pl.librontkrzysztof.service.UserService;
+import pl.librontkrzysztof.validator.TransactionValidator;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.List;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -23,10 +27,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 public class RESTController {
@@ -39,6 +40,9 @@ public class RESTController {
 
     @Autowired
     private CardDao cardDao;
+
+    @Autowired
+    SavedTransactionDao savedTransactionDao;
 
     @RequestMapping(method = RequestMethod.GET, value = {"/getImageToken/{userId}", "/MiniBank-1.0.0/getImageToken/{userId}"})
     public String getImageToken(@PathVariable String userId) throws IOException {
@@ -159,5 +163,14 @@ public class RESTController {
         }
         else
             return null;
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET, value = {"/getSavedTransaction/{id}", "/MiniBank-1.0.0/getSavedTransaction/{id}"})
+    public @ResponseBody java.util.List<TransactionValidator> getSavedTransaction(@PathVariable String id)  {
+        java.util.List<TransactionValidator> list = new ArrayList<TransactionValidator>();
+        TransactionValidator transactionValidator = new TransactionValidator(savedTransactionDao.findById(Integer.parseInt(id)));
+        list.add(transactionValidator);
+        return list;
     }
 }

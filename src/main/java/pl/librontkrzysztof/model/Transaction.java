@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -35,7 +36,7 @@ public class Transaction {
 
     @NotNull
     @Column(name = "value", precision = 8, scale = 2)
-    private Double value;
+    private BigDecimal value;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "status_id", referencedColumnName = "id")
@@ -66,7 +67,7 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Wallet source_wallet, String wallet_number, Date order_date, Date confirm_date, Double value, Status status, boolean confirmed, Token token, String title, String name, String address1, String address2) {
+    public Transaction(Wallet source_wallet, String wallet_number, Date order_date, Date confirm_date, BigDecimal value, Status status, boolean confirmed, Token token, String title, String name, String address1, String address2) {
         this.source_wallet = source_wallet;
         this.wallet_number = wallet_number;
         this.order_date = order_date;
@@ -121,11 +122,11 @@ public class Transaction {
         this.confirm_date = confirm_date;
     }
 
-    public Double getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public void setValue(BigDecimal value) {
         this.value = value;
     }
 

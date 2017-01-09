@@ -2,10 +2,12 @@ package pl.librontkrzysztof.validator;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.librontkrzysztof.model.SavedTransaction;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 
 public class TransactionValidator {
     @NotNull
@@ -17,7 +19,7 @@ public class TransactionValidator {
 
     @NotNull
     @DecimalMin(value = "0.01", message = "Kwota musi być większa lub równa 1 grosz.")
-    private Double value;
+    private BigDecimal value;
 
     @NotEmpty
     private String title;
@@ -35,6 +37,8 @@ public class TransactionValidator {
     private boolean template;
 
     private String token;
+
+    private String savedTransactionName;
 
     public boolean isTemplate() {
         return template;
@@ -64,11 +68,11 @@ public class TransactionValidator {
         this.wallet_number = wallet_number;
     }
 
-    public Double getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public void setValue(BigDecimal value) {
         this.value = value;
     }
 
@@ -112,7 +116,15 @@ public class TransactionValidator {
         this.template = template;
     }
 
-    public TransactionValidator(Integer source_wallet, String wallet_number, Double value, String title, String name, String address1, String address2, boolean template, String token) {
+    public String getSavedTransactionName() {
+        return savedTransactionName;
+    }
+
+    public void setSavedTransactionName(String savedTransactionName) {
+        this.savedTransactionName = savedTransactionName;
+    }
+
+    public TransactionValidator(Integer source_wallet, String wallet_number, BigDecimal value, String title, String name, String address1, String address2, boolean template, String token, String savedTransactionName) {
         this.source_wallet = source_wallet;
         this.wallet_number = wallet_number;
         this.value = value;
@@ -122,9 +134,20 @@ public class TransactionValidator {
         this.address2 = address2;
         this.template = template;
         this.token = token;
+        this.savedTransactionName = savedTransactionName;
     }
 
     public TransactionValidator() {
 
+    }
+
+    public TransactionValidator(SavedTransaction savedTransaction){
+        this.wallet_number = savedTransaction.getWallet_number();
+        this.value = savedTransaction.getValue();
+        this.title = savedTransaction.getTitle();
+        this.name = savedTransaction.getName();
+        this.address1 = savedTransaction.getAddress1();
+        this.address2 = savedTransaction.getAddress2();
+        this.savedTransactionName = savedTransaction.getTransactionname();
     }
 }

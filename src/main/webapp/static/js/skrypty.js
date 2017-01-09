@@ -49,3 +49,28 @@ $('#deleteModal').on('show.bs.modal', function(e) {
     $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
 });
 
+$('#template').click(function() {
+    $("#transactionName").toggle(this.checked);
+});
+
+$('.savecheck').click(function() {
+    var value = $(this).val();
+    if (value != 'BRAK'){
+    $("#formtrans").show();
+
+    $.ajax({
+        url: "/MiniBank-1.0.0/getSavedTransaction/"+value,
+    }).done(function( data ) {
+        $.each(data, function(index, element) {
+            $( "#wallet_number2" ).val(element.wallet_number);
+            $( "#value2" ).val(element.value);
+            $( "#title2" ).val(element.title);
+            $( "#name2" ).val(element.name);
+            $( "#address12" ).val(element.address1);
+            $( "#address22" ).val(element.address2);
+            $( "#address22" ).val(element.address2);
+        });
+    });
+    }
+});
+

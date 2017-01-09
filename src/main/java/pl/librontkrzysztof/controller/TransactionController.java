@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import pl.librontkrzysztof.dao.*;
 import pl.librontkrzysztof.model.Card;
+import pl.librontkrzysztof.model.SavedTransaction;
 import pl.librontkrzysztof.model.Token;
 import pl.librontkrzysztof.model.Transaction;
 import pl.librontkrzysztof.service.UserService;
@@ -19,6 +20,7 @@ import pl.librontkrzysztof.validator.TransactionValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Locale;
 
@@ -44,14 +46,18 @@ public class TransactionController {
     @Autowired
     StatusDao statusDao;
 
+    @Autowired
+    SavedTransactionDao savedTransactionDao;
+
     @RequestMapping(path = {"/new/{accountid}"}, method = RequestMethod.GET)
     public String newTransaction(ModelMap model, @PathVariable String accountid){
         pl.librontkrzysztof.model.User user = userService.findBySSO(SecurityContextHolder.getContext().getAuthentication().getName());
 
         if(cardDao.findActive(user.getId())) {
-            model.addAttribute("source_wallets", walletDao.findByUserId(user.getId()));
+            model.addAttribute("source_wallets", walletDao.findActiveByUserId(user.getId()));
             model.addAttribute("accountid", accountid);
             model.addAttribute("transaction", new TransactionValidator());
+            model.addAttribute("savetransactions", savedTransactionDao.findByUserId(user.getId()));
             return "user/transaction/new";
         }
         else
@@ -65,7 +71,7 @@ public class TransactionController {
         pl.librontkrzysztof.model.User user = userService.findBySSO(SecurityContextHolder.getContext().getAuthentication().getName());
 
         if(cardDao.findActive(user.getId())) {
-            model.addAttribute("source_wallets", walletDao.findByUserId(user.getId()));
+            model.addAttribute("source_wallets", walletDao.findActiveByUserId(user.getId()));
 
             model.addAttribute("accountid", accountid);
             model.addAttribute("source_wallet", transaction.getSource_wallet());
@@ -77,6 +83,7 @@ public class TransactionController {
             Token token = card.getNewToken();
             token.setUsed(true);
             tokenDao.save(token);
+            transaction.setValue(transaction.getValue().setScale(2, BigDecimal.ROUND_DOWN));
 
             model.addAttribute("token", token);
             model.addAttribute("token_id", token.getId());
@@ -93,7 +100,7 @@ public class TransactionController {
         pl.librontkrzysztof.model.User user = userService.findBySSO(SecurityContextHolder.getContext().getAuthentication().getName());
 
         if(cardDao.findActive(user.getId())) {
-            model.addAttribute("source_wallets", walletDao.findByUserId(user.getId()));
+            model.addAttribute("source_wallets", walletDao.findActiveByUserId(user.getId()));
 
             model.addAttribute("source_wallet", transaction.getSource_wallet());
             if(result.hasErrors())
@@ -126,6 +133,11 @@ public class TransactionController {
             trans.setOrder_date(new Date());
             trans.setStatus(statusDao.findById(1));
             transactionDao.save(trans);
+
+            if(transaction.getTemplate()){
+                SavedTransaction savedTransaction = new SavedTransaction(transaction, user);
+                savedTransactionDao.save(savedTransaction);
+            }
             return "user/transaction/success";
         }
         else

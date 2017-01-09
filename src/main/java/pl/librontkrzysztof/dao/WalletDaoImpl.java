@@ -52,6 +52,17 @@ public class WalletDaoImpl extends AbstractDao<Integer, Wallet> implements Walle
     }
 
     @Override
+    public List<Wallet> findActiveByUserId(int id) {
+        Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq("user.id", id));
+        criteria.add(Restrictions.eq("active", true));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<Wallet> wallets = (List<Wallet>) criteria.list();
+
+        return wallets;
+    }
+
+    @Override
     public List<Wallet> findAll() {
         Criteria criteria = createEntityCriteria();
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);

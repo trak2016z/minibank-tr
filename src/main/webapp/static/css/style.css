@@ -57,3 +57,7 @@ body {
 .active a {
 	color: #bbbbbb;
 }
+
+#formtrans {
+	display: none;
+}

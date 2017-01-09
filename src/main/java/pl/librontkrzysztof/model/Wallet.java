@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "wallets")
@@ -27,7 +28,7 @@ public class Wallet {
 
     @NotNull
     @Column(name = "content")
-    private Double content;
+    private BigDecimal content;
 
     @NotNull
     @Column(name = "active")
@@ -36,7 +37,7 @@ public class Wallet {
     public Wallet() {
     }
 
-    public Wallet(String name, User user, String number, Double content, boolean active) {
+    public Wallet(String name, User user, String number, BigDecimal content, boolean active) {
         this.name = name;
         this.user = user;
         this.number = number;
@@ -76,11 +77,11 @@ public class Wallet {
         this.number = number;
     }
 
-    public Double getContent() {
+    public BigDecimal getContent() {
         return content;
     }
 
-    public void setContent(Double content) {
+    public void setContent(BigDecimal content) {
         this.content = content;
     }
 

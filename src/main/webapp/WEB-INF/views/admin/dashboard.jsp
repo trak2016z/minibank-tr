@@ -46,6 +46,7 @@
         <!-- Default panel contents -->
         <div class="panel-heading"><span class="lead"><h4>Lista funkcji</h4></span></div>
         <div class="list-group">
+            <a href="<c:url value="/admin/transaction/list" />" class="list-group-item">Transakcje</a>
             <a href="<c:url value="/admin/users/list" />" class="list-group-item">Zarządzanie użytkownikami</a>
             <a href="<c:url value="/admin/imageToken/list" />" class="list-group-item">Zarządzanie tokenami obrazkowymi</a>
             <a href="<c:url value="/admin/helpdesk/list" />" class="list-group-item">Zarządzanie zgłoszeniami użytkowników</a>
