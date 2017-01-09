@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -146,5 +147,12 @@ public class TransactionController {
         }
     }
 
+
+    @RequestMapping(path = {"/history", "/history/list"}, method = RequestMethod.GET)
+    public String list(ModelMap model){
+        pl.librontkrzysztof.model.User user = userService.findBySSO(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("transactions", transactionDao.findByUserId(user.getId()));
+        return "user/history/list";
+    }
 
 }

@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/dashboard")
 public class HelpdeskController {
 
     @Autowired

@@ -28,17 +28,18 @@ public class TransactionDaoImpl extends AbstractDao<Integer, Transaction> implem
 
     @Override
     public List<Transaction> findByUserId(int id) {
-        Criteria criteria = createEntityCriteria();
-        criteria.add(Restrictions.eq("wallet.user.id", id));
-        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        List<Transaction> transactions = (List<Transaction>) criteria.list();
+
+        List<Transaction> transactions = getSession().createSQLQuery(
+                "Select * from transactions t LEFT JOIN wallets w ON t.source_wallet_id = w.id where w.user_id ="+id)
+                .addEntity(Transaction.class).list();
+
         return transactions;
     }
 
     @Override
     public List<Transaction> findByWalletId(int id) {
         Criteria criteria = createEntityCriteria();
-        criteria.add(Restrictions.eq("wallet.id", id));
+        criteria.add(Restrictions.eq("source_wallet.id", id));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         List<Transaction> transactions = (List<Transaction>) criteria.list();
         return transactions;
