@@ -77,33 +77,6 @@
             </tbody>
         </table>
     </div>
-    <sec:authorize access="hasRole('ADMIN')">
-        <div class="well">
-            <a href="<c:url value='/admin/imageToken/add' />">Dodaj nowy obrazek</a>
-        </div>
-    </sec:authorize>
-</div>
-
-
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">UWAGA! Wymagane potwierdzenie</h4>
-            </div>
-
-            <div class="modal-body">
-                <p>Czy na pewno chcesz dokonać usunięcia tego tokenu obrazkowego?</p>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-                <a class="btn btn-danger btn-ok">Usuń</a>
-            </div>
-        </div>
-    </div>
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

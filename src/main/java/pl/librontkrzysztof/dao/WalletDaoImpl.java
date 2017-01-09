@@ -45,6 +45,7 @@ public class WalletDaoImpl extends AbstractDao<Integer, Wallet> implements Walle
     public List<Wallet> findByUserId(int id) {
         Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("user.id", id));
+        criteria.addOrder(Order.asc("id"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         List<Wallet> wallets = (List<Wallet>) criteria.list();
 
